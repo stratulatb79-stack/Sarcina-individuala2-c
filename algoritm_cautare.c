@@ -5,7 +5,7 @@
 // -------------------- Functii pentru tablou --------------------
 void init_random(int *arr, int n) {
     for (int i = 0; i < n; i++)
-        arr[i] = rand() % 10000;   // numere între 0 și 9999
+        arr[i] = rand() % 10000;   // numere intre 0 si 9999
 }
 
 void display_array(int *arr, int n) {
@@ -23,14 +23,14 @@ void free_memory(int **arr, int *n) {
         free(*arr);
         *arr = NULL;
         *n = 0;
-        printf("Memoria a fost eliberată.\n");
+        printf("Memoria a fost eliberata.\n");
     } else {
         printf("Tabloul nu este alocat.\n");
     }
 }
 
-// -------------------- Algoritmi de căutare --------------------
-// Linear search: returnează indexul sau -1
+// -------------------- Algoritmi de cautare --------------------
+// Linear search: returneaza indexul sau -1
 int linear_search(int *arr, int n, int key) {
     for (int i = 0; i < n; i++)
         if (arr[i] == key)
@@ -38,7 +38,7 @@ int linear_search(int *arr, int n, int key) {
     return -1;
 }
 
-// Binary search (iterativ) – necesită tablou sortat crescător
+// Binary search (iterativ) – necesita tablou sortat crescator
 int binary_search(int *arr, int n, int key) {
     int left = 0, right = n - 1;
     while (left <= right) {
@@ -54,7 +54,7 @@ int binary_search(int *arr, int n, int key) {
 }
 
 // -------------------- Sortare pentru binary search --------------------
-// Quick sort (necesar pentru a sorta înainte de căutarea binară)
+// Quick sort (necesar pentru a sorta inainte de cautarea binara)
 void quick_sort(int *arr, int low, int high) {
     if (low < high) {
         int pivot = arr[high];
@@ -76,7 +76,7 @@ void quick_sort(int *arr, int low, int high) {
     }
 }
 
-// -------------------- Măsurare timp pentru o singură căutare --------------------
+// -------------------- Masurare timp pentru o singura cautare --------------------
 double measure_linear_search(int *arr, int n, int key) {
     clock_t start = clock();
     linear_search(arr, n, key);
@@ -85,7 +85,7 @@ double measure_linear_search(int *arr, int n, int key) {
 }
 
 double measure_binary_search(int *arr, int n, int key) {
-    // Sortăm o copie pentru a nu modifica originalul 
+    // Sortam o copie pentru a nu modifica originalul 
     int *copy = (int*)malloc(n * sizeof(int));
     for (int i = 0; i < n; i++) copy[i] = arr[i];
     quick_sort(copy, 0, n - 1);
@@ -96,33 +96,33 @@ double measure_binary_search(int *arr, int n, int key) {
     return (double)(end - start) / CLOCKS_PER_SEC;
 }
 
-// -------------------- Analiză empirică: 10000 de căutări --------------------
+// -------------------- Analiza empirica: 10000 de cautari --------------------
 void empirical_analysis() {
     int sizes[] = {100, 1000, 10000, 100000};
     double linear_times[4], binary_times[4];
 
-    printf("\n=== ANALIZĂ EMPIRICĂ (10.000 de căutări pentru fiecare N) ===\n");
-    printf("Se generează tablouri aleatoare și se măsoară timpul...\n\n");
+    printf("\n=== ANALIZA EMPIRICA (10.000 de cautari pentru fiecare N) ===\n");
+    printf("Se genereaza tablouri aleatoare si se masoara timpul...\n\n");
 
     for (int i = 0; i < 4; i++) {
         int N = sizes[i];
         int *arr = (int*)malloc(N * sizeof(int));
         init_random(arr, N);
 
-        // ----- Linear search: 10000 căutări -----
+        // ----- Linear search: 10000 cautari -----
         clock_t start_lin = clock();
         for (int k = 0; k < 10000; k++) {
-            int key = rand() % 10000;   // cheie aleatoare în același interval
+            int key = rand() % 10000;   // cheie aleatoare in acelasi interval
             linear_search(arr, N, key);
         }
         clock_t end_lin = clock();
         linear_times[i] = (double)(end_lin - start_lin) / CLOCKS_PER_SEC;
 
-        // ----- Binary search: sortăm o singură dată, apoi 10000 căutări -----
-        // Sortăm o copie pentru a nu distruge array-ul original (ne trebuie doar timpul căutărilor)
+        // ----- Binary search: sortam o singura data, apoi 10000 cautari -----
+        // Sortam o copie pentru a nu distruge array-ul original (ne trebuie doar timpul cautarilor)
         int *sorted_copy = (int*)malloc(N * sizeof(int));
         for (int j = 0; j < N; j++) sorted_copy[j] = arr[j];
-        quick_sort(sorted_copy, 0, N - 1);   // sortare o singură dată
+        quick_sort(sorted_copy, 0, N - 1);   // sortare o singura data
         clock_t start_bin = clock();
         for (int k = 0; k < 10000; k++) {
             int key = rand() % 10000;
@@ -135,7 +135,7 @@ void empirical_analysis() {
         free(arr);
     }
 
-    // Afișare tabel
+    // Afisare tabel
     printf("+----------------+------------+------------+------------+------------+\n");
     printf("| N              |        100 |       1000 |      10000 |     100000 |\n");
     printf("+----------------+------------+------------+------------+------------+\n");
@@ -155,13 +155,13 @@ int main() {
 
     do {
         printf("\n===== MENIU =====\n");
-        printf("1. Inițializare tablou cu numere aleatorii\n");
-        printf("2. Afișare tablou\n");
+        printf("1. Initializare tablou cu numere aleatorii\n");
+        printf("2. Afisare tablou\n");
         printf("3. Eliberare memorie tablou\n");
-        printf("4. Căutare liniară (măsoară timpul)\n");
-        printf("5. Căutare binară (măsoară timpul)\n");
-        printf("6. Analiză empirică (10.000 căutări pentru N = 100, 1000, 10000, 100000)\n");
-        printf("0. Ieșire\n");
+        printf("4. Cautare liniara (masoara timpul)\n");
+        printf("5. Cautare binara (masoara timpul)\n");
+        printf("6. Analiza empirica (10.000 cautari pentru N = 100, 1000, 10000, 100000)\n");
+        printf("0. Iesire\n");
         printf("Alegere: ");
         scanf("%d", &option);
 
@@ -170,7 +170,7 @@ int main() {
                 printf("Dimensiunea tabloului: ");
                 scanf("%d", &n);
                 if (n <= 0) {
-                    printf("Dimensiune invalidă.\n");
+                    printf("Dimensiune invalida.\n");
                     break;
                 }
                 if (array != NULL) free(array);
@@ -181,7 +181,7 @@ int main() {
                     break;
                 }
                 init_random(array, n);
-                printf("Tabloul a fost inițializat cu %d elemente aleatoare.\n", n);
+                printf("Tabloul a fost initializat cu %d elemente aleatoare.\n", n);
                 break;
             case 2:
                 if (array == NULL || n == 0)
@@ -197,10 +197,10 @@ int main() {
                     printf("Tabloul nu este alocat.\n");
                 } else {
                     int key;
-                    printf("Introduceți numărul căutat: ");
+                    printf("Introduceti numarul cautat: ");
                     scanf("%d", &key);
                     double t = measure_linear_search(array, n, key);
-                    printf("Timp căutare linear search: %f secunde\n", t);
+                    printf("Timp cautare linear search: %f secunde\n", t);
                 }
                 break;
             case 5:
@@ -208,20 +208,20 @@ int main() {
                     printf("Tabloul nu este alocat.\n");
                 } else {
                     int key;
-                    printf("Introduceți numărul căutat: ");
+                    printf("Introduceti numarul cautat: ");
                     scanf("%d", &key);
                     double t = measure_binary_search(array, n, key);
-                    printf("Timp căutare binary search (inclusiv sortare copie): %f secunde\n", t);
+                    printf("Timp cautare binary search (inclusiv sortare copie): %f secunde\n", t);
                 }
                 break;
             case 6:
                 empirical_analysis();
                 break;
             case 0:
-                printf("Ieșire din program.\n");
+                printf("Iesire din program.\n");
                 break;
             default:
-                printf("Opțiune invalidă.\n");
+                printf("Optiune invalida.\n");
         }
     } while (option != 0);
 
